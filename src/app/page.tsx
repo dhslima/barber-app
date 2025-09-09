@@ -3,11 +3,10 @@ import Header from "./_components/header";
 import { Button } from "@/components/ui/button";
 import { SearchIcon } from "lucide-react";
 import Image from "next/image";
-import { Card, CardContent } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Avatar, AvatarImage } from "@/components/ui/avatar";
 import { db } from "./_lib/prisma";
 import BarbershopItem from "./_components/barbershop-item";
+import { QUICK_SEARCH_ITEMS } from "./_constants/search";
+import BookingItem from "./_components/booking-item";
 
 export default async function Home() {
   const barbershops = await db.barbershop.findMany();
@@ -35,25 +34,13 @@ export default async function Home() {
 
       {/*Busca Rápida*/}
       <div className="mt-6 flex flex-row items-center gap-2">
-        <Button className="gap-2" variant={"secondary"}>
-          <Image src="/cabelo.svg" alt="Cabelo" width={16} height={16} />
-          Cabelo
-        </Button>
-
-        <Button className="gap-2" variant={"secondary"}>
-          <Image src="/barba.svg" alt="Barba" width={16} height={16} />
-          Barba
-        </Button>
-
-        <Button className="gap-2" variant={"secondary"}>
-          <Image
-            src="/acabamento.svg"
-            alt="Acabamento"
-            width={16}
-            height={16}
-          />
-          Acabamento
-        </Button>
+        {/*Mapeamento dos itens de busca rápida*/}
+        {QUICK_SEARCH_ITEMS.map((item) => (
+          <Button key={item.label} className="gap-2" variant={"secondary"}>
+            <Image src={item.icon} alt={item.label} width={16} height={16} />
+            {item.label}
+          </Button>
+        ))}
       </div>
 
       {/* Banner */}
@@ -67,30 +54,7 @@ export default async function Home() {
       </div>
 
       {/* Agendamento */}
-      <h2 className="mt-6 mb-3 text-xs font-bold text-gray-400 uppercase">
-        Agendamentos
-      </h2>
-      <Card>
-        <CardContent className="flex justify-between">
-          {/* Esquerda */}
-          <div className="flex flex-col gap-2">
-            <Badge className="w-fit">Confirmado</Badge>
-            <h3 className="font-semibold">Corte de Cabelo</h3>
-            <div className="flex flex-row items-center gap-2">
-              <Avatar className="h-6 w-6">
-                <AvatarImage src="https://github.com/shadcn.png" alt="Avatar" />
-              </Avatar>
-              <p className="text-sm">Barbearia</p>
-            </div>
-          </div>
-          {/* Direita */}
-          <div className="flex flex-col items-center justify-center gap-2 border-l-2 border-solid pl-4">
-            <p className="text-sm">Setembro</p>
-            <p className="text-2xl">10</p>
-            <p className="text-sm">14:00</p>
-          </div>
-        </CardContent>
-      </Card>
+      <BookingItem />
 
       {/* Barbershops */}
       <h2 className="mt-6 mb-3 text-xs font-bold text-gray-400 uppercase">
