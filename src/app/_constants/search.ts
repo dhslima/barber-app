@@ -16,4 +16,12 @@ export const QUICK_SEARCH_ITEMS: QuickSearchItem[] = [
     label: "Acabamento",
     icon: "/acabamento.svg",
   },
+  {
+    label: "Hidratação",
+    icon: "/hidratacao.svg",
+  },
+  {
+    label: "Massagem",
+    icon: "/massagem.svg",
+  },
 ];
