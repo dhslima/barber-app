@@ -24,7 +24,7 @@ import {
 import { authClient } from "@/lib/auth-client";
 
 const SidebarSheet = () => {
-  const handleLoginWithGoogleClick = async () => {
+  const handleLogin = async () => {
     await authClient.signIn.social({ provider: "google" });
   };
 
@@ -42,7 +42,7 @@ const SidebarSheet = () => {
 
       <div>
         {data?.user ? (
-          <div className="flex flex-row items-center gap-3">
+          <div className="flex flex-row items-center gap-3 border-b border-solid p-5">
             <Avatar>
               <AvatarImage
                 src={data?.user.image as string}
@@ -74,7 +74,7 @@ const SidebarSheet = () => {
                 <Button
                   className="gap-2 font-bold"
                   variant={"outline"}
-                  onClick={handleLoginWithGoogleClick}
+                  onClick={handleLogin}
                 >
                   <Image
                     src={"/google.svg"}
