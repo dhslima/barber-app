@@ -40,43 +40,54 @@ const SidebarSheet = () => {
         <SheetTitle className="text-left">Menu</SheetTitle>
       </SheetHeader>
 
-      <div className="flex flex-row items-center justify-between gap-4 border-b border-solid p-5">
-        <Avatar>
-          <AvatarImage
-            src={data?.user.image as string}
-            width={18}
-            height={18}
-          />
-        </Avatar>
-        <div>
-          <p className="font-bold">{data?.user.name}</p>
-          <p className="text-sm">{data?.user.email}</p>
-        </div>
-
-        <h2 className="font-bold">Olá, faça seu login!</h2>
-        <Dialog>
-          <DialogTrigger asChild>
-            <Button size={"icon"}>
-              <LogInIcon size={18} />
-            </Button>
-          </DialogTrigger>
-          <DialogContent className="w-[90%]">
-            <DialogHeader>
-              <DialogTitle>Faça login na plataforma</DialogTitle>
-              <DialogDescription>
-                Conecte-se usando sua conta Google
-              </DialogDescription>
-            </DialogHeader>
-            <Button
-              className="gap-2 font-bold"
-              variant={"outline"}
-              onClick={handleLoginWithGoogleClick}
-            >
-              <Image src={"/google.svg"} width={18} height={18} alt="Google" />
-              Google
-            </Button>
-          </DialogContent>
-        </Dialog>
+      <div>
+        {data?.user ? (
+          <div className="flex flex-row items-center gap-3">
+            <Avatar>
+              <AvatarImage
+                src={data?.user.image as string}
+                width={18}
+                height={18}
+              />
+            </Avatar>
+            <div>
+              <p className="font-bold">{data?.user.name}</p>
+              <p className="text-sm">{data?.user.email}</p>
+            </div>
+          </div>
+        ) : (
+          <div className="flex flex-row items-center justify-between gap-4 border-b border-solid p-5">
+            <h2 className="font-bold">Olá, faça seu login!</h2>
+            <Dialog>
+              <DialogTrigger asChild>
+                <Button size={"icon"}>
+                  <LogInIcon size={18} />
+                </Button>
+              </DialogTrigger>
+              <DialogContent className="w-[90%]">
+                <DialogHeader>
+                  <DialogTitle>Faça login na plataforma</DialogTitle>
+                  <DialogDescription>
+                    Conecte-se usando sua conta Google
+                  </DialogDescription>
+                </DialogHeader>
+                <Button
+                  className="gap-2 font-bold"
+                  variant={"outline"}
+                  onClick={handleLoginWithGoogleClick}
+                >
+                  <Image
+                    src={"/google.svg"}
+                    width={18}
+                    height={18}
+                    alt="Google"
+                  />
+                  Google
+                </Button>
+              </DialogContent>
+            </Dialog>
+          </div>
+        )}
       </div>
 
       <div className="flex flex-col gap-2 border-b border-solid p-5">
@@ -108,10 +119,12 @@ const SidebarSheet = () => {
         ))}
       </div>
       <div className="px-5">
-        <Button variant={"outline"} className="w-full" onClick={handleLogout}>
-          <LogOutIcon size={18} />
-          Sair da Conta
-        </Button>
+        <SheetClose asChild>
+          <Button variant={"outline"} className="w-full" onClick={handleLogout}>
+            <LogOutIcon size={18} />
+            Sair da Conta
+          </Button>
+        </SheetClose>
       </div>
     </SheetContent>
   );
