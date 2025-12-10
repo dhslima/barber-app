@@ -1,6 +1,5 @@
 "use client";
 
-import { Avatar, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import {
   SheetClose,
@@ -22,6 +21,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { authClient } from "@/lib/auth-client";
+import { Avatar, AvatarImage } from "@/components/ui/avatar";
 
 const SidebarSheet = () => {
   const handleLogin = async () => {
@@ -33,7 +33,7 @@ const SidebarSheet = () => {
   };
 
   const { data } = authClient.useSession();
-
+  console.log(data);
   return (
     <SheetContent>
       <SheetHeader>
@@ -44,11 +44,7 @@ const SidebarSheet = () => {
         {data?.user ? (
           <div className="flex flex-row items-center gap-3 border-b border-solid p-5">
             <Avatar>
-              <AvatarImage
-                src={data?.user.image as string}
-                width={18}
-                height={18}
-              />
+              <AvatarImage src={data?.user.image ?? ""} />
             </Avatar>
             <div>
               <p className="font-bold">{data?.user.name}</p>
@@ -118,14 +114,20 @@ const SidebarSheet = () => {
           </Button>
         ))}
       </div>
-      <div className="px-5">
-        <SheetClose asChild>
-          <Button variant={"outline"} className="w-full" onClick={handleLogout}>
-            <LogOutIcon size={18} />
-            Sair da Conta
-          </Button>
-        </SheetClose>
-      </div>
+      {data?.user && (
+        <div className="px-5">
+          <SheetClose asChild>
+            <Button
+              variant={"outline"}
+              className="w-full"
+              onClick={handleLogout}
+            >
+              <LogOutIcon size={18} />
+              Sair da Conta
+            </Button>
+          </SheetClose>
+        </div>
+      )}
     </SheetContent>
   );
 };
